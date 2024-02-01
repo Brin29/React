@@ -1,6 +1,39 @@
 import PropTypes from "prop-types"
+// Hoks = añadir funcionalidad a los componentes de react
+import { useState } from "react"
 
-export function TwitterFollowCard({formatUserName, userName, name, isFollowing}){
+// Las props deben ser inmutables
+// children es una prop que toma todo lo que se envuelve
+// userName = 'unknow' valores por defecto
+export function TwitterFollowCard({children, userName = 'unknow', initialIsFollowing}){
+  // Retorna un array
+  // 1 posicion El valor del estado
+  // 2 posicion Lo que permite cambiar el estado
+  // useStat(false) toma como parametro el valor por defecto
+  // Se pueden pasar props como estados
+  const [isFollowing, setIsFollow] = useState(initialIsFollowing)
+
+  // Renderizado condicional
+  const text = isFollowing ? "Siguiendo" : "Seguir"
+  // Cambiar los estilos
+  const buttonClassName = isFollowing 
+  ? "tw-followCard-button is-following"
+  : "tw-followCard-button"
+
+  // Estado interno
+  const handleClick = () => {
+    // si se da click cambia el estado
+    setIsFollow(!isFollowing)
+  }
+
+  // Mala practica porque esta modificando la prop
+  // userName = `@${userName}` 
+
+  // Buena practica
+  // const user = `@${userName}`
+
+
+  console.log(isFollowing)
   // Insertar el @
   // const addAt = (userName) => `@${userName}`
   // Estilos en react
@@ -22,13 +55,17 @@ export function TwitterFollowCard({formatUserName, userName, name, isFollowing})
           src={avatar} 
           alt="Avatar"/>
         <div className='tw-followCard-info'>
-          <strong>{name}</strong>
+          {children}
           {/* formatUserName es el formatUser definido en App*/}
-          <span className='tw-followCSard-infoUserName'>{formatUserName(userName)}</span>
+          <span className='tw-followCSard-infoUserName'>{userName}</span>
         </div>
       </header>
       <aside>
-        <button className='tw-followCard-button'>{isFollowing}</button>
+        <button className={buttonClassName} onClick={handleClick}>
+          {/* {text} <-- Children */}
+          <span className="tw-followCard-text" >{text}</span>
+          <span className="tw-followCard-stopFollow">Dejar de seguir</span>
+          </button>
       </aside>
     </article>
   )
@@ -45,7 +82,7 @@ TwitterFollowCard.propTypes = {
     PropTypes.number,
   ]), 
 
-  isFollowing: PropTypes.oneOfType([
+  initialIsFollowing: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
     PropTypes.bool,
@@ -55,6 +92,11 @@ TwitterFollowCard.propTypes = {
     PropTypes.string,
     PropTypes.number,
     PropTypes.bool,
+    PropTypes.object,
     PropTypes.func,
   ]),
+
+  children: PropTypes.oneOfType([
+    PropTypes.string
+  ])
 };
