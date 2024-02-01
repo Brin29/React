@@ -1,35 +1,48 @@
-article{
+.tw-followCard{
   display:flex;
   align-items:center;
   color:#fff;
   font-size:.8rem;
+  justify-content:space-between;
+  /* margin-bottom:20px; mala practica */
 }
 
-article header{
+/* Cuando esta al lado de otro */
+/* .tw-followCard + .tw-followCard{
+  margin-top:8px;
+} */
+
+.tw-followCard-header{
   display:flex;
   align-items:center;
-  gap:4px;
+  gap:8px;
 }
 
-article header div{
+.tw-followCard-info{
   display:flex;
   flex-direction:column;
 }
 
-article header span{
+.tw-followCard-infoUserName{
   opacity:.6;
 }
 
-article img{
+.tw-followCard-avatar{
   width:48px;
   height:48px;
   border-radius:1000px;
 }
 
-article button{
+.tw-followCard-button{
   margin-left:16px;
   border:0;
   border-radius:999px;
   padding:6px 16px;
   font-weight:bold;
+}
+
+.App {
+  display:flex;
+  flex-direction:column;
+  gap:18px;
 }
