@@ -6,9 +6,10 @@ import { useState } from "react"
 // children es una prop que toma todo lo que se envuelve
 // userName = 'unknow' valores por defecto
 export function TwitterFollowCard({children, userName = 'unknow', initialIsFollowing}){
+
   // Retorna un array
-  // 1 posicion El valor del estado
-  // 2 posicion Lo que permite cambiar el estado
+  // 1 El valor del estado
+  // 2 Lo que permite cambiar el estado (target)
   // useStat(false) toma como parametro el valor por defecto
   // Se pueden pasar props como estados
   const [isFollowing, setIsFollow] = useState(initialIsFollowing)
@@ -23,6 +24,7 @@ export function TwitterFollowCard({children, userName = 'unknow', initialIsFollo
   // Estado interno
   const handleClick = () => {
     // si se da click cambia el estado
+    // setIsFollow es como el target
     setIsFollow(!isFollowing)
   }
 
@@ -32,8 +34,6 @@ export function TwitterFollowCard({children, userName = 'unknow', initialIsFollo
   // Buena practica
   // const user = `@${userName}`
 
-
-  console.log(isFollowing)
   // Insertar el @
   // const addAt = (userName) => `@${userName}`
   // Estilos en react
