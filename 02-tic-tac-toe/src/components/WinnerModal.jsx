@@ -27,10 +27,14 @@ WinnerModal.propTypes = {
     winner:PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
+      PropTypes.object,
+      PropTypes.func
     ]),
     
     resetGame: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
+      PropTypes.object,
+      PropTypes.func
     ]), 
 }  

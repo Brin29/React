@@ -18,20 +18,25 @@ Square.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
+    PropTypes.object,
+    PropTypes.func
   ]),
   
   updateBoard: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
+    PropTypes.object,
+    PropTypes.func
   ]), 
 
   isSelected: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
+    PropTypes.any
   ]), 
 
   index: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
+    PropTypes.object,
+    PropTypes.func
   ])
 }
