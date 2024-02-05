@@ -1,0 +1,18 @@
+main{
+  display:flex;
+  align-items:center;
+  flex-direction:column;
+  justify-content:center;
+  font-family:system-ui;
+}
+
+section{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:2rem;
+}
+
+section img{
+  max-width:300px;
+}
