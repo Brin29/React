@@ -4,12 +4,13 @@
 // Ha diferencia del useEffect que cada vez que cambia renderiza el componente useRef no
 // import { useRef } from 'react'
 import './App.css'
-import { MoviesComponent } from './components/Movies'
+import { MoviesComponent } from './components/Movies.jsx'
 import { useMovies } from './hooks/useMovies.js'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
+import debounce from 'just-debounce-it'
 
 function useSearch (){
-  const [search, updateSeach] = useState("")
+  const [search, updateSearch] = useState("")
   const [error, setError] = useState(null)
   const isFirstInput = useRef(true)
 
@@ -36,13 +37,14 @@ function useSearch (){
     setError(null)
   },  [search])
 
-  return {search, updateSeach, error}
+  return {search, updateSearch, error}
 }
 
 
 function App() {
-  const {search, updateSeach, error} = useSearch()
-  const {moviesResult} = useMovies()
+  const [sort, setSort] = useState(false)
+  const {search, updateSearch, error} = useSearch()
+  const {movies, loading, getMovies} = useMovies({search, sort})
   // Forma controlada React lo controla
   // const [query, setQuery] = useState("")
   // const inputRef = useRef()
@@ -80,20 +82,36 @@ function App() {
   //   console.log(fields)
   // }
 
+  const debounceGetMovies = useCallback(
+    debounce(search => {
+      console.log("search", search)
+      getMovies({search})
+  }, 300)
+
+  , [getMovies]
+  )
+
   // Forma no controlada se gestiona el formulario atravez del DOM
-    const handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
     // const {query} = Object.fromEntries(new window.FormData(event.target))
-    console.log({search})
+    getMovies({ search })
+  }
+
+  const handleSort = () =>{
+    setSort(!sort)
   }
 
   // Controlada
-  const handleChange = (event) => { 
+  const handleChange = (event) => {
+    const newSearch = event.target.value
+    updateSearch(newSearch)
+    debounceGetMovies(newSearch)
+
     // const newQuery = event.target.value
     // // No hace un espacio vacio
     // if (newQuery.startsWith(" ")) return
     // const newQuery = event.target.value
-    updateSeach(event.target.value)
     // validaciones
     // Aqui es asincrono y llega tarde
     // if (newQuery === ""){
@@ -117,13 +135,17 @@ function App() {
         <h1>Buscador de Peliculas</h1>
         <form className='form' onSubmit={handleSubmit}>
           <input onChange={handleChange} value={search} name='query' placeholder='Avengers, Star Wars, The Matrix...'/>
+          <input type="checkbox" onChange={handleSort} checked={sort}/>
           <button type='submit'>Buscar</button>
         </form>
         {error && <p style={{color:"red"}}>{error}</p>}
       </header>
       
       <main>
-        <MoviesComponent movies={moviesResult}/>
+        {
+          loading ? <p> Cargando...</p> : null
+        }
+        <MoviesComponent movies={movies}/>
       </main>
     </div>
   )

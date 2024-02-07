@@ -3,15 +3,43 @@
   flex-direction:column;
   justify-content:center;
   align-items:center;
+  width:100%;
 }
 
 main{
   display:flex;
   justify-content:center;
+  width:100%;
 }
 
 form{
   display:flex;
   align-items:center;
   justify-content:center;
+}
+
+.movies{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  width:100%;
+  /* Como se comportan las columnas */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap:32px;
+}
+
+.movie {
+  text-align:center;
+}
+
+.movie h3, .movie p{
+  padding-bottom:0;
+}
+
+.movie img{
+  border-radius:8px;
+  width:230px;
+  height:350px;
+  margin-top:16px;
 }
